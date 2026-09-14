@@ -1,0 +1,88 @@
+@startuml
+title Casos de Uso Detalhados — Plan (P)
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor white
+  BorderColor #5C5C5C
+}
+
+actor Gestor
+actor Colaborador
+
+rectangle "ACTA — Plan" {
+  package "Abertura do ciclo" {
+    usecase P_ABR_01 as "Criar ciclo"
+    usecase P_ABR_02 as "Preencher dados\nde abertura"
+    usecase P_ABR_03 as "Confirmar abertura\ndo ciclo"
+    P_ABR_01 --> P_ABR_02
+    P_ABR_02 --> P_ABR_03
+  }
+
+  package "Problemas e priorização de metas" {
+    usecase P_PRO_01 as "Registrar histórico\ndo problema"
+    usecase P_PRO_02 as "Registrar levantamentos\nde perdas e ganhos"
+    usecase P_PRO_03 as "Revisar problemas\nsugeridos pela IA"
+    usecase P_PRO_04 as "Selecionar problemas sugeridos\ne atribuir pesos"
+    usecase P_PRO_05 as "Criar novos problemas\ne atribuir pesos"
+    usecase P_PRO_06 as "Definir metas\ndo ciclo"
+    usecase P_PRO_07 as "Atribuir responsáveis\npara as metas"
+    usecase P_PRO_EXT_01 as "Importar dados para\ncontextualizar a análise"
+
+    P_PRO_01 --> P_PRO_02
+    P_PRO_02 --> P_PRO_03
+    P_PRO_03 --> P_PRO_04
+    P_PRO_03 --> P_PRO_05
+    P_PRO_04 --> P_PRO_06
+    P_PRO_05 --> P_PRO_06
+    P_PRO_06 --> P_PRO_07
+    P_PRO_EXT_01 ..> P_PRO_01 : <<extend>>
+  }
+
+  package "Análise de causas" {
+    usecase P_CAU_01 as "Configurar o diagrama\nde Ishikawa"
+    usecase P_CAU_02 as "Coletar causas com\nos colaboradores"
+    usecase P_CAU_03 as "Julgar hipóteses como\nfortes, médias ou fracas"
+    usecase P_CAU_04 as "Aplicar 5 Porquês\nnas hipóteses fortes"
+    usecase P_CAU_05 as "Analisar e registrar\ncausas raiz"
+    usecase P_CAU_EXT_01 as "Criar Ishikawa\nadicional"
+    usecase P_CAU_EXT_02 as "Aplicar 5 Porquês\nnas demais hipóteses"
+
+    P_CAU_01 --> P_CAU_02
+    P_CAU_02 --> P_CAU_03
+    P_CAU_03 --> P_CAU_04
+    P_CAU_04 --> P_CAU_05
+    P_CAU_EXT_01 ..> P_CAU_01 : <<extend>>
+    P_CAU_EXT_02 ..> P_CAU_04 : <<extend>>
+    P_CAU_EXT_02 --> P_CAU_05
+  }
+
+  package "Plano de ação" {
+    usecase P_PLA_01 as "Preencher o 5W2H\ndo plano"
+    usecase P_PLA_02 as "Enviar o 5W2H para\ncolaboradores contribuírem"
+    usecase P_PLA_03 as "Revisar ações\nsugeridas pela IA"
+    usecase P_PLA_EXT_01 as "Adicionar anexos e\nevidências para as ações"
+
+    P_PLA_01 --> P_PLA_02
+    P_PLA_02 --> P_PLA_03
+    P_PLA_EXT_01 ..> P_PLA_03 : <<extend>>
+  }
+
+  P_ABR_03 --> P_PRO_01 : ciclo aberto
+  P_PRO_07 --> P_CAU_01 : metas definidas
+  P_CAU_05 --> P_PLA_01 : causa raiz registrada
+}
+
+Gestor --> P_ABR_01
+Gestor --> P_PRO_01
+Gestor --> P_CAU_03
+Gestor --> P_PLA_01
+Gestor --> P_PLA_03
+
+Colaborador --> P_CAU_02
+Colaborador --> P_PLA_02
+@enduml

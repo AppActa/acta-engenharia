@@ -1,0 +1,35 @@
+@startuml
+title Casos de Uso Resumidos — Check (C)
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor white
+  BorderColor #5C5C5C
+}
+
+actor Colaborador
+actor Gestor
+
+rectangle "ACTA — Check" {
+  usecase UC_C01 as "Estimar atingimento\ndas metas"
+  usecase UC_C02 as "Consultar relatório\nde tarefas"
+  usecase UC_C03 as "Consultar verificações\ne efeitos secundários"
+  usecase UC_C04 as "Registrar conclusão\nda verificação"
+  usecase UC_C05 as "Registrar efeitos\nsecundários"
+  usecase UC_C06 as "Atualizar status\ndas metas"
+}
+
+Colaborador --> UC_C01
+Colaborador --> UC_C02
+Colaborador --> UC_C03
+
+UC_C01 <-- Gestor
+UC_C02 <-- Gestor
+UC_C03 <-- Gestor
+UC_C04 <-- Gestor
+UC_C05 <-- Gestor
+UC_C06 <-- Gestor
+@enduml

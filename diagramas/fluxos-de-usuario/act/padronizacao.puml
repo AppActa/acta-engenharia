@@ -1,0 +1,31 @@
+@startuml
+title Act — Padronização
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa a seção de Padronização;
+:Elabora o documento do padrão da solução;
+note right
+  • Tipo: POP, IT, OPL ou Checklist
+  • Título do documento
+  • Descrição do novo padrão
+  • Data de início
+  • Formatação Markdown
+end note
+:Registra a comunicação do novo padrão;
+note right
+  • Colaboradores que receberão o comunicado
+  • Data
+  • Canal, por padrão e-mail
+  • Evidência em PDF
+end note
+:Define o plano de auditoria;
+note right
+  • Frequência: semanal, mensal ou trimestral
+  • Responsável pela auditoria
+  • Data da primeira auditoria
+end note
+stop
+@enduml

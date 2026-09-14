@@ -1,0 +1,52 @@
+@startuml
+title Casos de Uso Resumidos — Do (D)
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor white
+  BorderColor #5C5C5C
+}
+
+actor Colaborador
+actor Gestor
+
+rectangle "ACTA — Do" {
+  usecase UC_D01 as "Consultar treinamentos\ne participações"
+  usecase UC_D02 as "Consultar alertas\nde prazo"
+  usecase UC_D03 as "Marcar alerta\ncomo lido"
+  usecase UC_D04 as "Consultar progresso\ndo ciclo"
+  usecase UC_D05 as "Consultar dados das tarefas\ne responsáveis"
+  usecase UC_D06 as "Gerenciar dependências\nentre tarefas"
+  usecase UC_D07 as "Cadastrar ou excluir\no treinamento"
+  usecase UC_D08 as "Atribuir treinamento\naos participantes"
+  usecase UC_D09 as "Registrar conclusão\ndo treinamento"
+  usecase UC_D10 as "Alterar etapa ou\npausar o ciclo"
+  usecase UC_D11 as "Criar tarefa e\natribuir responsável"
+  usecase UC_D12 as "Editar tarefa\ne prazo"
+  usecase UC_D13 as "Alterar status\nda tarefa"
+  usecase UC_D14 as "Reatribuir, cancelar\ne reabrir tarefa"
+}
+
+Colaborador --> UC_D01
+Colaborador --> UC_D02
+Colaborador --> UC_D03
+Colaborador --> UC_D04
+Colaborador --> UC_D05
+
+UC_D01 <-- Gestor
+UC_D02 <-- Gestor
+UC_D04 <-- Gestor
+UC_D05 <-- Gestor
+UC_D06 <-- Gestor
+UC_D07 <-- Gestor
+UC_D08 <-- Gestor
+UC_D09 <-- Gestor
+UC_D10 <-- Gestor
+UC_D11 <-- Gestor
+UC_D12 <-- Gestor
+UC_D13 <-- Gestor
+UC_D14 <-- Gestor
+@enduml

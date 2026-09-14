@@ -1,0 +1,55 @@
+@startuml
+title Check — Verificação dos resultados
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa a seção "Verificação dos Resultados";
+|Sistema|
+:Apresenta dashboards comparativos\nantes e depois da intervenção;
+note right
+  Gráfico sequencial antes da intervenção
+  e gráfico sequencial após a intervenção.
+end note
+|Gestor|
+:Insere os dados pós-execução\ndo indicador principal;
+|IA|
+:Apresenta painéis de análise;
+note right
+  • Causas mais comuns
+  • Ações mais eficazes
+  • Metas mais atingidas
+  • Padrões mais recorrentes
+end note
+|Sistema|
+:Calcula os resultados;
+note right
+  • Variação percentual contra a linha de base
+  • Comparação com as metas definidas
+  • Atingida, parcialmente atingida ou não atingida
+end note
+
+if (Meta atingida?) then (Não)
+  |IA|
+  :Sugere melhorias;
+endif
+
+|Gestor|
+:Registra efeitos secundários observados, se existirem;
+note right
+  Positivos: melhorias não previstas.
+  Negativos: efeitos colaterais.
+end note
+:Registra se a causa raiz foi bloqueada\ne informa a justificativa;
+
+|Sistema|
+if (Causa raiz bloqueada efetivamente?) then (Sim)
+  :Encaminha o ciclo para Padronização;
+else (Não)
+  :Registra o desvio;
+  :Preserva os dados no histórico\nde lições aprendidas;
+  :Retorna o ciclo para Análise de Fenômeno;
+endif
+stop
+@enduml

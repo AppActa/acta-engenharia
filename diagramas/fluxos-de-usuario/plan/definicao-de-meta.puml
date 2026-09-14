@@ -1,0 +1,32 @@
+@startuml
+title Plan — Definição de meta
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa o formulário de identificação da meta;
+repeat
+  :Preenche todos os campos obrigatórios;
+  note right
+    • Objetivo
+    • Valor-alvo mensurável
+    • Prazo estimado
+    • Responsáveis
+    • Tags
+    • Severidade
+    • Área
+    • Categoria
+  end note
+  :Confirma a meta;
+  |Sistema|
+  :Valida os campos;
+  if (Meta válida?) then (Não)
+    :Exibe os campos obrigatórios em falta;
+  endif
+  |Gestor|
+repeat while (Meta válida?) is (Não) not (Sim)
+|Sistema|
+:Salva a meta e a vincula ao ciclo;
+stop
+@enduml

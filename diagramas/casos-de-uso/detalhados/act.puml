@@ -1,0 +1,52 @@
+@startuml
+title Casos de Uso Detalhados — Act (A)
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor white
+  BorderColor #5C5C5C
+}
+
+actor Gestor
+actor Colaborador
+
+rectangle "ACTA — Act" {
+  package "Padronização" {
+    usecase A_PAD_01 as "Acessar a etapa\nde padronização"
+    usecase A_PAD_02 as "Elaborar documento\ndo novo padrão"
+    usecase A_PAD_03 as "Registrar comunicação\ndo padrão"
+    usecase A_PAD_04 as "Definir plano de\nauditoria do padrão"
+
+    A_PAD_01 --> A_PAD_02
+    A_PAD_02 --> A_PAD_03
+    A_PAD_03 --> A_PAD_04
+  }
+
+  package "Conclusão e aprendizados" {
+    usecase A_CON_01 as "Acessar a conclusão\ndo ciclo"
+    usecase A_CON_02 as "Consultar relatório de\naproveitamento do ciclo"
+    usecase A_CON_03 as "Registrar problemas\nque aconteceram"
+    usecase A_CON_04 as "Registrar lições\naprendidas"
+    usecase A_CON_05 as "Revisar lições aprendidas\npela IA"
+    usecase A_CON_06 as "Gerar relatório one-click\nem PDF ou PPTX"
+    usecase A_CON_07 as "Encerrar o ciclo"
+
+    A_CON_01 --> A_CON_02
+    A_CON_02 --> A_CON_03
+    A_CON_03 --> A_CON_04
+    A_CON_04 --> A_CON_05
+    A_CON_05 --> A_CON_06
+    A_CON_06 --> A_CON_07
+  }
+
+  A_PAD_04 --> A_CON_01 : padrão concluído
+}
+
+Gestor --> A_PAD_01
+Gestor --> A_CON_01
+Colaborador --> A_CON_04
+@enduml

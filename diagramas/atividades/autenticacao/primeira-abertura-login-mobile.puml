@@ -1,0 +1,124 @@
+@startuml
+title Autenticação 1 — Primeira abertura e primeiro login no Mobile
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor white
+  BorderColor #5C5C5C
+  DiamondBackgroundColor white
+  DiamondBorderColor #5C5C5C
+  StartColor #1F1F1F
+  EndColor #1F1F1F
+}
+
+|Usuário|
+start
+:Abre o ACTA Mobile;
+
+|ACTA Mobile|
+:Exibe a Splash Screen;
+:Inicializa o Firebase Auth;
+
+|Armazenamento local|
+:Carrega o estado persistido;
+
+|ACTA Mobile|
+:Aguarda o AuthStateListener informar o estado atual;
+
+|Firebase Auth|
+if (Existe um Firebase currentUser?) then (Sim)
+  |ACTA Mobile|
+  :Não exibe a tela de login;
+  :Obtém o Token ID da sessão atual;
+  :Envia GET /me\nAuthorization: Bearer Token ID;
+  stop
+else (Não)
+  |ACTA Mobile|
+  :Exibe a tela de login;
+endif
+
+|Usuário|
+if (Já possui uma conta no Firebase?) then (Sim)
+  repeat
+    :Informa e-mail e senha;
+    |ACTA Mobile|
+    :Valida a entrada;
+    :Chama Firebase signInWithEmailAndPassword;
+    |Firebase Auth|
+    :Recebe e-mail e senha;
+    :Valida as credenciais;
+    if (Credenciais válidas?) then (Não)
+      :Retorna erro de autenticação;
+      |ACTA Mobile|
+      :Permanece na tela de login;
+      :Exibe "E-mail ou senha inválidos";
+    endif
+  repeat while (Credenciais válidas?) is (Não) not (Sim)
+
+  |Firebase Auth|
+  :Cria ou restaura a sessão Firebase;
+  :Retorna Firebase User, Firebase UID,\nToken ID e sessão renovável;
+
+  |ACTA Mobile|
+  :Não salva senha nem Token ID manualmente;
+  :Envia GET /me\nAuthorization: Bearer Token ID;
+  stop
+else (Não)
+  :Abre o link de convite;
+endif
+
+|ACTA Mobile|
+:Identifica o invitationToken no deep link;
+note right
+  Token único usado para validar e ativar
+  o vínculo do usuário com a empresa.
+end note
+:Exibe "Ativar minha conta";
+
+repeat
+  |Usuário|
+  :Informa uma senha para criar a conta no Firebase;
+  |ACTA Mobile|
+  :Chama Firebase createUserWithEmailAndPassword;
+  |Firebase Auth|
+  :Tenta criar a conta;
+  if (Conta criada?) then (Não)
+    :Retorna erro;
+    |ACTA Mobile|
+    :Exibe a mensagem específica do erro;
+    :Retorna à tela "Ativar minha conta";
+  endif
+repeat while (Conta criada?) is (Não) not (Sim)
+
+|Firebase Auth|
+:Cria a identidade no Firebase;
+
+|ACTA Mobile|
+:Solicita o e-mail de verificação;
+
+|E-mail / Notificação|
+:Envia o e-mail de verificação;
+
+|ACTA Mobile|
+:Exibe "Verifique seu e-mail";
+
+repeat
+  |Usuário|
+  :Abre o e-mail e confirma o usuário;
+  |ACTA Mobile|
+  :Recarrega o usuário Firebase;
+  :Força a renovação do Token ID;
+  |Firebase Auth|
+  :Verifica email_verified no novo Token ID;
+  if (email_verified = true?) then (Não)
+    |ACTA Mobile|
+    :Continua na tela "Verifique seu e-mail";
+    :Exibe a opção de reenviar o e-mail;
+  endif
+repeat while (email_verified = true?) is (Não) not (Sim)
+
+|ACTA Mobile|
+:Envia POST /auth/ativar\nAuthorization: Bearer Token ID\nBody: token do convite;
+stop
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+title Act — Geração de relatório
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa a seção "Relatório one-click";
+:Seleciona as fases do recorte\n(Plan, Do, Check e Act);
+note right
+  Seções disponíveis:
+  • Introdução
+  • Problema redefinido
+  • Meta
+  • Causa raiz
+  • Plano de ação
+  • Verificação
+  • Padronização
+  • Lições aprendidas
+end note
+
+if (Adicionar seção extra?) then (Sim)
+  :Adiciona dados adicionais, legendas,\ngráficos extras ou texto livre;
+endif
+
+if (Formato de exportação?) then (PDF)
+  :Seleciona .pdf;
+else (PPTX)
+  :Seleciona .pptx;
+endif
+
+|Sistema|
+:Gera e disponibiliza o download do relatório;
+stop
+@enduml

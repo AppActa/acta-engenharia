@@ -1,0 +1,29 @@
+@startuml
+title Do — Controle de prazo
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Sistema|
+start
+repeat
+  :Monitora continuamente os prazos;
+  if (Prazo da tarefa venceu?) then (Sim)
+    :Dispara alerta para o gestor;
+    if (Tarefa foi concluída após o alerta?) then (Não)
+      |Gestor|
+      if (Decisão do gestor?) then (Reabrir tarefa)
+        :Reabre a tarefa;
+        :Define um novo prazo;
+      else (Reatribuir tarefa)
+        :Define outro colaborador como responsável;
+      endif
+    else (Sim)
+      |Sistema|
+      :Registra a conclusão da tarefa;
+    endif
+  else (Não)
+    :Registra a conclusão quando informada;
+  endif
+repeat while (Todas as tarefas foram concluídas?) is (Não) not (Sim)
+stop
+@enduml

@@ -1,0 +1,54 @@
+@startuml
+title Casos de Uso Resumidos — Plan (P)
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor white
+  BorderColor #5C5C5C
+}
+
+actor Colaborador
+actor Gestor
+
+rectangle "ACTA — Plan" {
+  usecase UC_P01 as "Importar dados e\ndocumentos do ciclo"
+  usecase UC_P02 as "Registrar priorização\ndo problema"
+  usecase UC_P03 as "Criar plano de ação"
+  usecase UC_P04 as "Consultar dados\ndo planejamento"
+  usecase UC_P05 as "Resolver ou\ndescartar problema"
+  usecase UC_P06 as "Aplicar o peso\nde priorização"
+  usecase UC_P07 as "Validar ou excluir\ncausa raiz"
+  usecase UC_P08 as "Editar ou cancelar\nplano de ação"
+  usecase UC_P09 as "Preencher 5W2H\ndo plano de ação"
+  usecase UC_P10 as "Aprovar plano\nde ação"
+  usecase UC_P11 as "Definir metas\ndo plano"
+  usecase UC_P12 as "Atribuir responsáveis\npara as metas"
+  usecase UC_P13 as "Criar, editar ou\nencerrar ciclo"
+  usecase UC_P14 as "Gerenciar participantes\ndo ciclo"
+  usecase UC_P15 as "Registrar e\neditar problema"
+}
+
+Colaborador --> UC_P01
+Colaborador --> UC_P02
+Colaborador --> UC_P03
+Colaborador --> UC_P04
+
+UC_P01 <-- Gestor
+UC_P02 <-- Gestor
+UC_P03 <-- Gestor
+UC_P04 <-- Gestor
+UC_P05 <-- Gestor
+UC_P06 <-- Gestor
+UC_P07 <-- Gestor
+UC_P08 <-- Gestor
+UC_P09 <-- Gestor
+UC_P10 <-- Gestor
+UC_P11 <-- Gestor
+UC_P12 <-- Gestor
+UC_P13 <-- Gestor
+UC_P14 <-- Gestor
+UC_P15 <-- Gestor
+@enduml

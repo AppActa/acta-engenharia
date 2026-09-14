@@ -1,0 +1,45 @@
+@startuml
+title Plan — Coleta de dados do fenômeno
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa a seção "Análise de Fenômeno";
+:Configura o formulário de coleta;
+note right
+  Campos predefinidos:
+  • Sintoma (como se manifesta), obrigatório
+  • Indivíduo (quem está envolvido)
+  • Timestamp automático
+  • Localização automática via GPS
+  • Clima automático via API
+
+  O gestor pode criar campos próprios.
+  Armazenamento indicado no FigJam: MongoDB.
+end note
+:Define a obrigatoriedade de cada campo;
+:Seleciona os colaboradores que receberão o formulário;
+
+repeat
+  |Sistema|
+  :Envia notificação aos colaboradores selecionados;
+  if (Notificação recebida?) then (Não)
+    :Reenvia a notificação após um intervalo;
+  endif
+repeat while (Notificação recebida?) is (Não) not (Sim)
+
+|Colaborador|
+:Acessa o formulário;
+|Sistema|
+:Captura GPS e clima automaticamente;
+|Colaborador|
+:Preenche os campos;
+:Envia o formulário;
+|Sistema|
+:Registra a resposta;
+|Gestor|
+:Visualiza as respostas;
+:Registra a conclusão da observação;
+stop
+@enduml

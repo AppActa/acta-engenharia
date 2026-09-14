@@ -1,0 +1,87 @@
+@startuml
+title Execução de Tarefas
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor white
+  BorderColor #5C5C5C
+  DiamondBackgroundColor white
+  DiamondBorderColor #5C5C5C
+  StartColor #1F1F1F
+  EndColor #1F1F1F
+  BarColor #1F1F1F
+}
+
+|Gestor|
+start
+:Acessa o plano de ações do ciclo;
+:Escolhe o modo de visualização;
+
+if (Modo de visualização?) then (Prazo)
+  :Visualiza por prazo e linha do tempo (Gantt);
+else (Status)
+  :Visualiza colunas por status\n(Não iniciada | Em andamento | Concluída);
+endif
+
+:Registra o treinamento dos envolvidos;
+note right
+  • Colaboradores participantes
+  • Data do treinamento
+  • Responsável pelo treinamento
+  • Conteúdo ministrado (.pdf)
+  • Obrigatoriedade do treinamento
+end note
+
+|Colaborador|
+:Tenta acessar suas tarefas;
+
+|Sistema|
+:Verifica se o treinamento foi registrado;
+if (Treinamento registrado?) then (Sim)
+  :Libera o acesso às tarefas;
+else (Não)
+  :Bloqueia o acesso às tarefas;
+  stop
+endif
+
+fork
+  |Colaborador|
+  :Acessa suas tarefas atribuídas;
+fork again
+  |Colaborador|
+  :Acessa sua página pessoal\n(Tarefas atribuídas e pendentes |\nTarefas concluídas | Recados do gestor);
+  note right
+    A página permanece disponível durante o ciclo.
+  end note
+end fork
+
+|Colaborador|
+:Registra a execução;
+
+|Sistema|
+:Verifica a conformidade com o plano de ação;
+
+' O FigJam liga "sim" à solicitação de justificativa, embora a atividade
+' anterior mencione conformidade. A decisão foi nomeada como "Houve desvio?"
+' para manter a regra descrita na tabela de dados do próprio quadro.
+if (Houve desvio do plano de ação?) then (Sim)
+  :Solicita justificativa obrigatória;
+  |Colaborador|
+  :Registra a justificativa;
+endif
+
+|Sistema|
+:Encaminha a ação para acompanhamento;
+
+|Gestor|
+:Verifica o progresso da execução em tempo real\nno painel gerencial;
+
+if (É necessário intervir?) then (Reatribuir)
+  :Reatribui uma tarefa para outro colaborador;
+else (Reabrir)
+  :Reabre uma tarefa já concluída;
+endif
+
+stop
+@enduml

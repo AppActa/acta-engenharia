@@ -1,0 +1,56 @@
+@startuml
+title Análise de Causas
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor white
+  BorderColor #5C5C5C
+  DiamondBackgroundColor white
+  DiamondBorderColor #5C5C5C
+  StartColor #1F1F1F
+  EndColor #1F1F1F
+}
+
+|Gestor|
+start
+:Acessa a seção Análise de Causas;
+:Define as categorias do 6M (Ishikawa);
+
+|Sistema|
+:Gera o formulário dinâmico correspondente\nao 6M configurado;
+
+|Gestor|
+:Seleciona os colaboradores que receberão o formulário;
+
+|Sistema|
+' O FigJam contém uma segunda atividade com o mesmo texto após a seleção
+' dos colaboradores. Ela foi preservada para manter o fluxo original.
+:Gera o formulário dinâmico correspondente\nao 6M configurado;
+:Envia uma notificação aos colaboradores selecionados;
+
+|Colaborador|
+:Acessa o formulário recebido;
+:Preenche as causas por categoria do 6M;
+
+|Sistema|
+:Atualiza o diagrama de Ishikawa em tempo real\nconforme as respostas chegam;
+
+|Gestor|
+:Acessa a lista de causas levantadas no Ishikawa;
+:Unifica as causas que julgar\nsemanticamente parecidas;
+
+while (Há hipótese forte a analisar?) is (Sim)
+  :Realiza os 5 Porquês para a hipótese forte;
+  :Anexa evidências aos porquês;
+endwhile (Não)
+
+:Analisa os resultados dos 5 Porquês;
+
+|Sistema|
+:IA sugere causas raiz com base\nnas respostas encadeadas;
+
+|Gestor|
+:Registra formalmente uma ou mais causas raiz;
+stop
+@enduml

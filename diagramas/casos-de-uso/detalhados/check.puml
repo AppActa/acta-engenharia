@@ -1,0 +1,40 @@
+@startuml
+title Casos de Uso Detalhados — Check (C)
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor white
+  BorderColor #5C5C5C
+}
+
+actor Gestor
+
+rectangle "ACTA — Check" {
+  package "Verificação" {
+    usecase C_VER_01 as "Acessar a validação\ndo ciclo"
+    usecase C_VER_02 as "Visualizar gráfico pré\ne pós-intervenção"
+    usecase C_VER_03 as "Inserir resultado pós-execução\ndo indicador principal"
+    usecase C_VER_04 as "Analisar padrões, causas e\nações com apoio da IA"
+    usecase C_VER_05 as "Registrar efeitos\nsecundários"
+    usecase C_VER_06 as "Registrar conclusão\nda verificação"
+    usecase C_VER_07 as "Justificar a conclusão\nda verificação"
+    usecase C_VER_08 as "Decidir se o bloqueio da\ncausa raiz foi eficaz"
+    usecase C_VER_EXT_01 as "Preservar aprendizados\ne retornar ao P"
+
+    C_VER_01 --> C_VER_02
+    C_VER_02 --> C_VER_03
+    C_VER_03 --> C_VER_04
+    C_VER_04 --> C_VER_05
+    C_VER_05 --> C_VER_06
+    C_VER_06 --> C_VER_07
+    C_VER_07 --> C_VER_08
+    C_VER_EXT_01 ..> C_VER_08 : <<extend>>
+  }
+}
+
+Gestor --> C_VER_01
+@enduml
