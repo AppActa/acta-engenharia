@@ -1,0 +1,49 @@
+@startuml
+title GitOps
+
+left to right direction
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+actor Desenvolvedor
+
+rectangle "Desenvolve e altera\no código" as Desenvolvimento
+artifact "Código e\nconfigurações" as Codigo
+rectangle "PRs e\ncode review" as Revisao
+rectangle "Testes e build" as Pipeline
+
+rectangle "Definição do\nestado desejado" as EstadoDesejado
+rectangle "Sincronização e\nreconciliação" as Reconciliacao
+
+rectangle "Construção e\nversionamento de imagem" as BuildImagem
+storage "Armazenamento\ndas imagens" as Registro
+
+node "Execução do ambiente" as Ambiente
+cloud "Aplicação em\nprodução e dev" as Aplicacao
+
+Desenvolvedor --> Desenvolvimento
+Desenvolvimento --> Codigo
+Codigo --> Revisao
+Revisao --> Pipeline
+
+Pipeline --> EstadoDesejado
+EstadoDesejado --> Reconciliacao
+Reconciliacao --> Ambiente : Sync / Deploy
+
+Pipeline --> BuildImagem
+BuildImagem --> Registro
+Registro --> Ambiente : Pull da imagem
+
+Ambiente --> Aplicacao
+
+legend bottom
+  |= Tecnologia |= Papel no fluxo |
+  | GitHub | Código, configurações, PRs e revisão |
+  | GitHub Actions | Testes, build e versionamento de imagem |
+  | Argo CD | Sincronização e reconciliação |
+  | GHCR | Armazenamento das imagens |
+  | EC2 + K3s | Infraestrutura de execução |
+  | Kubernetes (K3s) | Orquestração do ambiente |
+endlegend
+
+@enduml

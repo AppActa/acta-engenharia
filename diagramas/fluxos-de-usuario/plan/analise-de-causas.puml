@@ -1,0 +1,58 @@
+@startuml
+title Plan — Análise de causas (Ishikawa, 5 Porquês e causa raiz)
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa a seção "Análise de causas";
+|Sistema|
+:Gera o formulário do 6M;
+note right
+  Máquina, Método, Mão de obra,
+  Meio ambiente, Medidas e Matéria-prima.
+end note
+
+repeat
+  :Envia notificação aos colaboradores selecionados;
+  if (Notificação recebida?) then (Não)
+    :Reenvia a notificação após um intervalo;
+  endif
+repeat while (Notificação recebida?) is (Não) not (Sim)
+
+|Colaborador|
+:Acessa o formulário;
+:Preenche as causas;
+|Sistema|
+:Atualiza o diagrama de Ishikawa em tempo real;
+|Gestor|
+:Acessa a lista de causas levantadas;
+:Unifica as causas que julgar parecidas;
+
+repeat
+  :Classifica cada causa como Forte, Média ou Fraca;
+  :Registra a justificativa da classificação, se necessário;
+  :Anexa evidência à causa, se necessário;
+repeat while (Todas as causas foram julgadas?) is (Não) not (Sim)
+
+|Sistema|
+:Lista as hipóteses classificadas como Forte;
+|Gestor|
+while (Há hipótese Forte pendente?) is (Sim)
+  :Aplica os 5 Porquês obrigatoriamente;
+  note right
+    Por quê 1, Por quê 2, ...,
+    Por quê N e causa raiz.
+    Armazenamento indicado no FigJam: MongoDB.
+  end note
+endwhile (Não)
+
+if (Aplicar 5 Porquês em hipóteses Média/Fraca?) then (Sim)
+  while (Há hipótese Média/Fraca pendente?) is (Sim)
+    :Aplica os 5 Porquês;
+  endwhile (Não)
+endif
+
+:Registra uma ou mais causas raiz;
+stop
+@enduml

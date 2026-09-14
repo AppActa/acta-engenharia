@@ -1,0 +1,20 @@
+@startuml
+title Sequência de Autenticação
+
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+
+actor Cliente
+participant Firebase
+participant API
+
+Cliente -> Firebase : Login
+Firebase --> Cliente : Firebase ID Token
+Cliente -> API : POST /auth/ativar\nBearer token
+API --> Cliente : Identidade do ACTA
+Cliente -> API : GET /me
+API --> Cliente : Contexto autenticado do usuário\n(PostgreSQL)
+Cliente -> API : Outras chamadas protegidas\nBearer token
+API --> Cliente : Resposta
+
+@enduml

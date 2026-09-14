@@ -1,0 +1,30 @@
+@startuml
+title Casos de Uso Resumidos — Act (A)
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor white
+  BorderColor #5C5C5C
+}
+
+actor Colaborador
+actor Gestor
+
+rectangle "ACTA — Act" {
+  usecase UC_A01 as "Consultar relatório\none-click do ciclo"
+  usecase UC_A02 as "Estimar recorrência\nde problemas"
+  usecase UC_A03 as "Registrar lições\naprendidas"
+  usecase UC_A04 as "Encerrar ciclo"
+}
+
+Colaborador --> UC_A01
+Colaborador --> UC_A02
+
+UC_A01 <-- Gestor
+UC_A02 <-- Gestor
+UC_A03 <-- Gestor
+UC_A04 <-- Gestor
+@enduml

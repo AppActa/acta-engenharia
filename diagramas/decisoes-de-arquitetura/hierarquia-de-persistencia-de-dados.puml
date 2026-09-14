@@ -1,0 +1,76 @@
+@startuml
+title Hierarquia de Persistência de Dados
+
+top to bottom direction
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "Classes-base abstratas" {
+  abstract class ModelBase {
+    id : Long
+  }
+
+  abstract class ImutavelBase {
+    criadoEm : OffsetDateTime
+  }
+
+  abstract class AuditoriaBase {
+    atualizadoEm : OffsetDateTime
+  }
+
+  abstract class TituloDescricaoBase {
+    titulo : String
+    descricao : String
+  }
+
+  abstract class ContatoBase {
+    contato : String
+    principal : Boolean
+  }
+
+  ModelBase <|-- ImutavelBase
+  ImutavelBase <|-- AuditoriaBase
+  AuditoriaBase <|-- TituloDescricaoBase
+  ImutavelBase <|-- ContatoBase
+}
+
+package "Classes concretas" {
+  class Ciclo
+  class Tarefa
+  class Empresa
+  class Usuario
+  class EmailX
+  class TelefoneX
+}
+
+package "Schemas do banco de dados" {
+  package "pdca" as SchemaPdca {
+  }
+
+  package "public" as SchemaPublic {
+  }
+
+  package "auditoria" as SchemaAuditoria {
+  }
+}
+
+TituloDescricaoBase <|-- Ciclo
+TituloDescricaoBase <|-- Tarefa
+AuditoriaBase <|-- Empresa
+AuditoriaBase <|-- Usuario
+ContatoBase <|-- EmailX
+ContatoBase <|-- TelefoneX
+
+Ciclo ..> SchemaPdca
+Tarefa ..> SchemaPdca
+Empresa ..> SchemaPublic
+Usuario ..> SchemaPublic
+EmailX ..> SchemaPublic
+TelefoneX ..> SchemaPublic
+
+note right of SchemaAuditoria
+  Não vai para a API.
+end note
+
+@enduml

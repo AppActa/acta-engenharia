@@ -1,0 +1,45 @@
+@startuml
+title Plan — Criação do plano de ação
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa a seção 5W2H;
+note right
+  What, Why, Where, Who,
+  When, How e How much.
+  Pode existir um 5W2H por causa raiz.
+end note
+
+if (Enviar o plano aos colaboradores por link?) then (Sim)
+  |Sistema|
+  :Gera link compartilhável;
+  :Envia o link aos colaboradores selecionados;
+  |Colaborador|
+  :Acessa o formulário;
+  :Preenche as informações solicitadas;
+  |Sistema|
+  :Atualiza o 5W2H em tempo real;
+else (Não)
+  |Gestor|
+  :Preenche o 5W2H sozinho;
+endif
+
+|IA|
+:Gera sugestões com base no 5W2H;
+|Gestor|
+if (Decisão sobre a sugestão?) then (Aceitar)
+  :Aceita a sugestão;
+elseif (Ajustar) then (Alterar)
+  :Altera as informações sugeridas;
+  :Salva a versão ajustada;
+else (Criar manualmente)
+  :Cria a ação manualmente;
+endif
+
+|Sistema|
+:Cria a ação no plano de ações;
+:Notifica a equipe;
+stop
+@enduml

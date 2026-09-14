@@ -1,0 +1,47 @@
+@startuml
+title Act — Lições aprendidas
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa a seção de Conclusão;
+|Sistema|
+:Apresenta relatório de aproveitamento do ciclo;
+note right
+  • Prazo planejado x prazo real
+  • Percentual de tarefas concluídas
+  • Percentual de atingimento das metas
+  • Efeitos secundários registrados
+end note
+|Gestor|
+:Registra os problemas que ainda existem;
+note right
+  • O que não foi resolvido e por quê
+  • Planejamento para ciclo futuro
+end note
+:Inicia o registro de lições aprendidas;
+|IA|
+:Sugere lições com base nos dados do ciclo;
+
+|Gestor ou Colaborador|
+if (Deseja adicionar uma lição aprendida?) then (Sim)
+  :Informa os dados da lição;
+  note right
+    • Título e descrição
+    • Fase de origem automática
+    • Resultado
+    • Tags, severidade, área e categoria
+
+    A lição pertence ao histórico da empresa,
+    não somente ao ciclo atual.
+  end note
+  |Sistema|
+  :Salva a lição no histórico da empresa;
+  :Sugere lições aprendidas de ciclos anteriores;
+else (Não)
+  |Sistema|
+  :Mantém somente as sugestões geradas;
+endif
+stop
+@enduml

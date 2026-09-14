@@ -1,0 +1,55 @@
+@startuml
+title Casos de Uso Detalhados — Do (D)
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor white
+  BorderColor #5C5C5C
+}
+
+actor Colaborador
+actor Gestor
+
+rectangle "ACTA — Do" {
+  package "Execução" {
+    usecase D_EXE_01 as "Consultar painel\npessoal de tarefas"
+    usecase D_EXE_02 as "Concluir treinamento\nobrigatório"
+    usecase D_EXE_03 as "Receber e consultar\ntarefas atribuídas"
+    usecase D_EXE_04 as "Executar tarefas\natribuídas"
+    usecase D_EXE_05 as "Finalizar tarefa"
+    usecase D_EXE_06 as "Registrar data e\no que foi feito"
+    usecase D_EXE_EXT_01 as "Justificar o desvio\ndo plano"
+
+    D_EXE_01 --> D_EXE_02
+    D_EXE_02 --> D_EXE_03
+    D_EXE_03 --> D_EXE_04
+    D_EXE_04 --> D_EXE_05
+    D_EXE_05 --> D_EXE_06
+    D_EXE_EXT_01 ..> D_EXE_06 : <<extend>>
+  }
+
+  package "Preparação e acompanhamento" {
+    usecase D_ACO_01 as "Visualizar cronograma\nem Gantt ou Kanban"
+    usecase D_ACO_02 as "Registrar e atribuir\ntreinamentos"
+    usecase D_ACO_03 as "Acompanhar o progresso\nda execução"
+    usecase D_ACO_EXT_01 as "Reabrir tarefa\nconcluída"
+    usecase D_ACO_EXT_02 as "Reatribuir tarefa"
+
+    D_ACO_01 --> D_ACO_02
+    D_ACO_02 --> D_ACO_03
+    D_ACO_EXT_01 ..> D_ACO_03 : <<extend>>
+    D_ACO_EXT_02 ..> D_ACO_03 : <<extend>>
+  }
+
+  D_ACO_02 --> D_EXE_02 : treinamento atribuído
+  D_EXE_06 --> D_ACO_03 : execução registrada
+}
+
+Colaborador --> D_EXE_01
+Colaborador --> D_ACO_01
+Gestor --> D_ACO_01
+@enduml

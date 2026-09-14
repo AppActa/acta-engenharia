@@ -1,0 +1,93 @@
+@startuml
+title Autenticação 0 — Administrador cria usuário e convite pelo Web
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor white
+  BorderColor #5C5C5C
+  DiamondBackgroundColor white
+  DiamondBorderColor #5C5C5C
+  StartColor #1F1F1F
+  EndColor #1F1F1F
+}
+
+|Administrador|
+start
+note right
+  Pré-requisito:
+  administrador com conta Firebase ativa,
+  vinculada a uma empresa ativa.
+end note
+:Abre o ACTA Web;
+
+|ACTA Web|
+:Inicializa o Firebase Auth;
+
+|Firebase Auth|
+:Verifica se existe uma sessão persistida;
+
+if (Existe sessão persistida?) then (Não)
+  |ACTA Web|
+  :Exibe a tela de login;
+  |Administrador|
+  :Informa e-mail e senha;
+  |Firebase Auth|
+  :Valida as credenciais;
+endif
+
+|Firebase Auth|
+:Disponibiliza Firebase User e Token ID;
+
+|ACTA Web|
+:Obtém o Token ID;
+:Envia GET /me\nAuthorization: Bearer Token ID;
+
+|acta-pg-api|
+:Valida o Token ID;
+:Extrai o Firebase UID;
+
+|PostgreSQL|
+:Busca usuario_sistema pelo firebase_uid;
+:Retorna administrador, empresa e papel;
+
+|acta-pg-api|
+:Verifica usuário ativo, empresa ativa\ne permissões necessárias;
+:Retorna 200 com o contexto do administrador;
+
+|ACTA Web|
+:Abre o painel do administrador;
+
+|Administrador|
+:Seleciona "Adicionar colaborador";
+
+|ACTA Web|
+:Exibe o formulário do colaborador;
+
+|Administrador|
+:Confirma o cadastro;
+
+|ACTA Web|
+:Envia POST /empresas/{idEmpresa}/convites\nAuthorization: Bearer Token ID\nBody: dados do colaborador;
+
+|acta-pg-api|
+:Autentica novamente a requisição;
+:Valida os dados enviados;
+:Cria usuario_sistema com status PENDENTE,\nvínculo com a empresa, colaborador, convite,\nvalidade e hash do token do convite;
+
+|PostgreSQL|
+:Salva o usuário, o colaborador e o convite;
+
+|acta-pg-api|
+:Solicita o envio do convite;
+
+|E-mail / Notificação|
+:Envia o link para o colaborador;
+
+|acta-pg-api|
+:Retorna 201 Created;
+
+|ACTA Web|
+:Exibe "Convite enviado";
+stop
+@enduml

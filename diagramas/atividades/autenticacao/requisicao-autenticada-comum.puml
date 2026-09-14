@@ -1,0 +1,73 @@
+@startuml
+title Autenticação 2 — Requisição autenticada comum
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor white
+  BorderColor #5C5C5C
+  StartColor #1F1F1F
+  EndColor #1F1F1F
+}
+
+|Usuário|
+start
+note right
+  Pré-requisitos:
+  • Conta Firebase ativa e válida
+  • Vínculo com uma empresa ativa
+  • Dispositivo com acesso à internet
+end note
+:Abre a tela de tarefas;
+
+|ACTA Mobile|
+:Carrega a tela;
+
+|Armazenamento local|
+:Consulta as tarefas em cache, se existirem;
+
+|ACTA Mobile|
+:Solicita ao Firebase SDK o Token ID atual;
+
+|Firebase Auth|
+:Retorna o Firebase Token ID;
+
+|ACTA Mobile|
+:Envia GET /tarefas\nAuthorization: Bearer Token ID;
+
+|acta-pg-api|
+:Extrai o Bearer Token do cabeçalho Authorization;
+
+|Firebase Auth|
+:Valida assinatura, expiração e emissor do Token ID;
+
+|acta-pg-api|
+:Extrai o Firebase UID do token validado;
+
+|PostgreSQL|
+:Busca usuario_sistema pelo firebase_uid;
+:Retorna usuário, empresa, colaborador,\nstatus e permissões;
+
+|acta-pg-api|
+:Verifica se usuário, empresa e colaborador estão ativos;
+
+|PostgreSQL|
+:Consulta as tarefas pertencentes\nao ciclo atual do usuário;
+:Retorna as tarefas correspondentes;
+
+|acta-pg-api|
+:Retorna 200 OK;
+
+|ACTA Mobile|
+:Salva ou atualiza as tarefas\nno armazenamento local;
+
+|Armazenamento local|
+:Armazena o cache das tarefas do usuário;
+
+|ACTA Mobile|
+:Atualiza a tela de tarefas;
+
+|Usuário|
+:Visualiza a tela de tarefas;
+stop
+@enduml

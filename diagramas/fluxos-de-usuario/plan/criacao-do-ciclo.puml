@@ -1,0 +1,25 @@
+@startuml
+title Plan — Criação do ciclo
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa o sistema;
+:Seleciona "Novo ciclo";
+|Sistema|
+:Exibe o formulário de criação do ciclo;
+repeat
+  |Gestor|
+  :Preenche os dados;
+  :Confirma a criação;
+  |Sistema|
+  :Valida os dados;
+  if (Dados válidos?) then (Não)
+    :Exibe os erros;
+  endif
+repeat while (Dados válidos?) is (Não) not (Sim)
+:Cria o ciclo;
+:Exibe mensagem de sucesso;
+stop
+@enduml

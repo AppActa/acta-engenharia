@@ -1,0 +1,62 @@
+@startuml
+title Plan — Identificação do problema
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Acessa a seção "Identificação do problema";
+:Informa o período de análise\n(recomendação: seis meses);
+:Informa o indicador principal\n(% de falhas, horas paradas ou custo);
+
+if (Como inserir os dados históricos?) then (Importar arquivo)
+  repeat
+    :Faz upload de arquivo .csv ou .xlsx;
+    |Sistema|
+    :Valida o arquivo;
+    if (Arquivo válido?) then (Não)
+      :Exibe erro de formato;
+    endif
+    |Gestor|
+  repeat while (Arquivo válido?) is (Não) not (Sim)
+  |Sistema|
+  :Lê e mapeia os dados;
+else (Inserir manualmente)
+  |Gestor|
+  :Digita os dados período a período;
+endif
+
+|Sistema|
+:Gera gráfico sequencial com a variação no tempo;
+|Gestor|
+:Registra o impacto financeiro estimado;
+:Registra o impacto operacional\n(horas, produtividade e segurança);
+|IA|
+:Formula problemas e subproblemas\ncom base nos dados registrados;
+|Gestor|
+:Analisa a lista gerada pela IA;
+:Seleciona, edita ou remove problemas;
+:Adiciona manualmente novos problemas\nou subproblemas, se necessário;
+
+if (Coletar priorização dos colaboradores?) then (Sim)
+  :Seleciona os colaboradores da pesquisa;
+  |Sistema|
+  :Envia formulário drag-and-drop com os problemas;
+  :Anexa automaticamente data/hora,\nlocalização e clima via Open-Meteo;
+  |Colaborador|
+  :Ordena os problemas e envia a resposta;
+  |Sistema|
+  :Calcula pesos com base nas respostas;
+  |Gestor|
+  if (Aceita os pesos sugeridos?) then (Sim)
+    |Sistema|
+    :Aplica os pesos dos colaboradores;
+  else (Não)
+    |Gestor|
+    :Define o peso de cada problema\ne subproblema, de 0 a 100;
+  endif
+else (Não)
+  :Define o peso de cada problema\ne subproblema, de 0 a 100;
+endif
+stop
+@enduml

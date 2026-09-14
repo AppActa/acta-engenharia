@@ -1,0 +1,43 @@
+@startuml
+title Do — Execução de tarefas
+skinparam backgroundColor white
+skinparam shadowing false
+
+|Gestor|
+start
+:Registra o treinamento dos envolvidos;
+:Define quais colaboradores terão\ntreinamento obrigatório ou opcional;
+|Sistema|
+:Pré-carrega as informações do treinamento;
+note right
+  • Colaboradores participantes
+  • Data do treinamento
+  • Responsável pelo treinamento
+  • Conteúdo ministrado (.pdf)
+end note
+:Verifica o treinamento do colaborador;
+
+if (Treinamento registrado?) then (Sim)
+  :Libera o acesso às tarefas;
+  |Colaborador|
+  :Acessa suas tarefas;
+  :Registra a execução da ação;
+  |Sistema|
+  :Verifica a conformidade da execução;
+  if (Houve desvio do plano de ação — 5W2H?) then (Sim)
+    :Solicita justificativa obrigatória;
+    |Colaborador|
+    :Registra a justificativa;
+  endif
+else (Não)
+  note right
+    O FigJam encaminha diretamente este caminho
+    para acompanhamento, sem representar uma
+    atividade explícita de bloqueio.
+  end note
+endif
+
+|Sistema|
+:Encaminha a execução para acompanhamento;
+stop
+@enduml
