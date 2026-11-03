@@ -45,7 +45,7 @@ Os 28 diagramas são mantidos como arquivos-fonte PlantUML (`.puml`) e estão di
 | **Plan** | Criação do ciclo, identificação do problema, coleta de dados, definição de meta, análise de causas e criação do plano de ação |
 | **Do** | Execução de tarefas e controle de prazo |
 | **Check** | Verificação dos resultados e análise do atingimento da meta |
-| **Act** | Padronização, lições aprendidas e geração de relatório |
+| **Act** | Padronização, auditoria do padrão, lições aprendidas e geração de relatório |
 
 Os casos de uso possuem uma versão resumida, adequada para visão geral, e uma versão detalhada, com atores, relações e desdobramentos do processo.
 
@@ -111,6 +111,7 @@ Cada diagrama deve permanecer no grupo correspondente ao seu propósito. Os flux
 ## 📚 Documentos relacionados
 
 - [Planilha de requisitos](requisitos/requisitos.xlsx)
+- [Fluxo de auditoria do padrão](diagramas/fluxos-de-usuario/act/auditoria.md)
 - [Dinâmica de Trabalho da Equipe Acta](<Dinâmica de Trabalho da Equipe Acta.pdf>)
 - [Modelo de Pull Request](PULL_REQUEST_TEMPLATE.md)
 
